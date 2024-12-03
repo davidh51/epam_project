@@ -1,0 +1,44 @@
+name: CD Pipeline
+
+on:
+  workflow_dispatch:  # Manually triggered
+  push:
+    branches:
+      - main  # Trigger on pushes to the main branch
+
+env:
+  CI_REGISTRY: ghcr.io
+  CI_PROJECT_NAMESPACE: ${{ github.repository_owner }}
+  CI_PROJECT_NAME: ${{ github.repository }}
+  IMAGE_TAG: ${{ github.run_number }}.0.0
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    services:
+      docker:
+        image: docker:dind
+        options: --privileged
+
+    steps:
+    # Log in to GitHub Container Registry
+    - name: Log in to GitHub Container Registry
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.GITHUB_ACTOR }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    # Pull Docker Image from Registry
+    - name: Pull Docker Image
+      run: |
+        docker pull $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:$IMAGE_TAG
+
+    # Run and Validate Docker Image
+    - name: Test Docker Image
+      run: |
+        docker run --rm $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:$IMAGE_TAG echo "Running image validation!"
+
+    # Deploy the Docker Image (optional deployment step)
+    - name: Deploy Docker Image
+      run: |
+        echo "Deploying image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:$IMAGE_TAG"
