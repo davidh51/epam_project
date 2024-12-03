@@ -35,7 +35,7 @@ jobs:
 
     # Lint Dockerfile
     - name: Lint Dockerfile
-      uses: hadolint/hadolint-action@v1
+      uses: hadolint/hadolint-action@master
       with:
         dockerfile: Dockerfile
 
