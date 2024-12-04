@@ -8,7 +8,7 @@ on:
 
 permissions:      # permissions for the github_token to authenticate the github_container
   packages: write
-  contents: read
+  contents: #read
 
 env:
   CI_REGISTRY: ghcr.io
