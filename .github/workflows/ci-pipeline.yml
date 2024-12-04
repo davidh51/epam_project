@@ -8,7 +8,7 @@ on:
     - cron: '0 0 * * *'  # Run daily at midnight UTC
 
 permissions:      # permissions for the github_token to authenticate the github_container
-  packages: write  
+  packages: write  ##
   contents: read
 
 env:
