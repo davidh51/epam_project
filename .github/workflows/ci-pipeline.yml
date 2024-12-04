@@ -18,8 +18,7 @@ env:
   IMAGE_TAG: ${{ github.run_number }}.0.0  # Semantic Versioning example: major.minor.patch
 
 jobs:
-  #build_and_push:
-  log_in:
+  build_and_push:
     runs-on: ubuntu-latest
 
     steps:
