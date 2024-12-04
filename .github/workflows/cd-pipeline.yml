@@ -17,7 +17,7 @@ env:
   IMAGE_TAG: ${{ github.run_number }}.0.0
 
 jobs:
-  deploy:
+  Docker-deploy:
     runs-on: ubuntu-latest
     services:
       docker:
@@ -47,3 +47,18 @@ jobs:
     - name: Deploy Docker Image
       run: |
         echo "Deploying image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:$IMAGE_TAG"
+
+  Render-deployment:
+       runs-on: ubuntu-latest
+       needs: [Docker-deploy]
+
+       environment: Render
+
+       steps:
+         - name: Get actions
+           uses: actions/checkout@v4
+         - name: Deploying to Render
+           uses: johnbeynon/render-deploy-action@v0.0.8
+           with:
+             service-id: ${{secrets.RENDER_SERVICE_ID}}
+             api-key: ${{secrets.RENDER_API_KEY}}
