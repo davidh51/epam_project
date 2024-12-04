@@ -3,7 +3,7 @@ name: CI Pipeline
 on:
   push:
     branches:
-      - master # Trigger on pushes to the main branch
+      - master #Trigger on pushes to the main branch
   schedule:
     - cron: '0 0 * * *'  # Run daily at midnight UTC
 
