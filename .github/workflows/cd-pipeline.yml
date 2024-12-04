@@ -4,7 +4,7 @@ on:
   workflow_dispatch:  # Manually triggered
   push:
     branches:
-      - main  # Trigger on pushes to the main branch
+      - master  # Trigger on pushes to the main branch
 
 permissions:      # permissions for the github_token to authenticate the github_container
   packages: write
