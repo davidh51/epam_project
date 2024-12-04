@@ -39,42 +39,22 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
         
-  #lint:
-  #  runs-on: ubuntu-latest
-  #  needs: [log_in]
-    
-  #  steps:
     # Lint Dockerfile
     - name: Lint Dockerfile
       uses: hadolint/hadolint-action@master
       with:
         dockerfile: build/Dockerfile
 
-  build_image:
-    runs-on: ubuntu-latest
-    needs: [log_in]
-
-    steps:
     # Build Docker Image
     - name: Build Docker Image
       run: |
         docker build -f build/Dockerfile -t $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:$IMAGE_TAG .
 
-  run_test:
-    runs-on: ubuntu-latest
-    needs: [build_image]
-      
-    steps:
     # Test Docker Image (replace with actual test commands)
     - name: Test Docker Image
       run: |
         docker run --rm $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:$IMAGE_TAG echo "Test successful!"
 
-  push_image:
-    runs-on: ubuntu-latest
-    needs: [run_test]
-
-    steps:
     # Push Docker Image to GitHub Container Registry
     - name: Push Docker Image
       run: |
