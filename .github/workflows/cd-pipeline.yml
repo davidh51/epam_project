@@ -7,7 +7,7 @@ on:
       - master  # Trigger on pushes to the main branch
 
 permissions:      # permissions for the github_token to authenticate the github_container
-  packages: write
+  packages: write       
   contents: read
 
 env:
@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       docker:
-        image: docker:dind
+        image: docker:dind # starts the dockr in docker service, enable docker commands
         options: --privileged
 
     steps:
@@ -43,7 +43,7 @@ jobs:
       run: |
         docker run --rm $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:$IMAGE_TAG echo "Running image validation!"
 
-    # Deploy the Docker Image (optional deployment step)
+    # Simulates deploy the Docker Image (optional deployment step)
     - name: Deploy Docker Image
       run: |
         echo "Deploying image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:$IMAGE_TAG"
@@ -55,7 +55,7 @@ jobs:
        environment: Render
 
        steps:
-         - name: Get actions
+         - name: Get actions # checks the repository code
            uses: actions/checkout@v4
          - name: Deploying to Render
            uses: johnbeynon/render-deploy-action@v0.0.8
