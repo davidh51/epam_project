@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - master # Trigger on pushes to the main branch
-  schedule:
-    - cron: '0 0 * * *'  # Run daily at midnight UTC
+#  schedule:
+#    - cron: '0 0 * * *'  # Run daily at midnight UTC
 
 permissions:      # permissions for the github_token to authenticate the github_container
   packages: write  #
